@@ -1,0 +1,4 @@
+3
+Hi there!
+This is a file that goes with a sample Java file.
+Hopefully you can read this in the Java console!
