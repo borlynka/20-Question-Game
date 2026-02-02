@@ -7,6 +7,20 @@ public class QuestionsGame {
     // Your code here
 
     private static class QuestionNode {
-        // Your code here
+        public String data;
+        public QuestionNode left;
+        public QuestionNode right;
+
+        //constructs a leaf node with given data
+        public QuestionNode(String data){
+            this(data,null,null);
+        }
+
+        //constructs a node with the given data and links
+        public QuestionNode(String data, QuestionNode left, QuestionNode right){
+            this.data = data;
+            this.left = left;
+            this.right = right;
+        }
     }
 }
