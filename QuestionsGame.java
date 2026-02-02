@@ -10,18 +10,18 @@ public class QuestionsGame {
     QuestionNode game;
     // Your code here
 
-    private static class QuestionNode {
-        public final String data;
-        public QuestionNode left;
-        public QuestionNode right;
+    public static class QuestionNode<E> {
+        public final E data;
+        public QuestionNode<E> left;
+        public QuestionNode<E> right;
 
         //constructs a leaf node with given data
-        public QuestionNode(String data){
+        public QuestionNode(E data){
             this(data,null,null);
         }
 
         //constructs a node with the given data and links
-        public QuestionNode(String data, QuestionNode left, QuestionNode right){
+        public QuestionNode(E data, QuestionNode<E> left, QuestionNode<E> right){
             this.data = data;
             this.left = left;
             this.right = right;
@@ -61,12 +61,16 @@ public class QuestionsGame {
             output.println(root.data);
         }
         
-        if(root.left != null){
-            questiontree(output,root.left);
-        }
-        if(root.right != null){
-            questiontree(output,root.right);
-        }
+
+        questiontree(output,root.left);
+        questiontree(output,root.right);
+
 
     }
+
+
+    public void paly(){
+
+    }
+
 }
