@@ -4,6 +4,7 @@
 // header comment.
 
 import java.io.*;
+import java.util.*;
 
 
 public class QuestionsGame {
@@ -70,7 +71,38 @@ public class QuestionsGame {
 
 
     public void paly(){
+        gametree(game);
+    }
 
+    private void gametree(QuestionNode root){
+        Scanner scanner = new Scanner(System.in);
+        //leaf
+        if(root.left == null && root.right == null){
+            System.out.println("I guess that your object is "+root.data);
+            System.out.println("Am I right? (y/n)");
+            //if start with y for answers
+            if(scanner.nextLine().trim().toLowerCase().startsWith("y")){
+                System.out.println("Awesome! I win!");
+            }else{ //response =="n"
+                System.out.println("Boo! I Lose. Please help me get better!");
+                System.out.println("What is your object?");
+                String newanswer = scanner.nextLine();
+                System.out.println("Please give me a yes/no question that distinguishes between " + newanswer + " and "+root.data+".\nQ: ");
+                String newquestion = scanner.nextLine();
+                System.out.println("Is the answer \"yes\" for "+ newanswer + "? (y/n)");
+                String response = scanner.next();
+                //add to the tree with a add method
+
+            }
+        }else{
+            System.out.println(root.data + "(y/n)?");
+            //if start with y
+            if(scanner.nextLine().trim().toLowerCase().startsWith("y")){
+                gametree(root.left);
+            }else{
+                gametree(root.right);
+            }
+        }
     }
 
 }
