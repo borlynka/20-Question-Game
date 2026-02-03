@@ -1,8 +1,6 @@
-// This is a starter file for QuestionsGame.
-//
-// You should delete this comment and replace it with your class
-// header comment.
-
+//Borlynka Xiang and Analeigh Wagner
+//Period 7
+//Description:
 import java.io.*;
 import java.util.*;
 
@@ -34,11 +32,26 @@ public class QuestionsGame {
 
     }
 
-
-
-
-
-
+     public QuestionsGame(Scanner input) {
+    	Scanner key = new Scanner(System.in);
+    	game = readTree(input);
+    }
+    private QuestionNode readTree(Scanner input) {
+        String type = input.nextLine();   //Q: or A:
+        String text = input.nextLine();   //actual question or answer
+        
+        //leaf node - answer
+        if (type.equals("A:")) {
+            return new QuestionNode(text);
+        } 
+        else {
+            //branch node - question
+            QuestionNode yesBranch = readTree(input);
+            QuestionNode noBranch = readTree(input);
+            return new QuestionNode(text, yesBranch, noBranch);
+        }
+    }
+    
     public void saveQuestions(PrintStream output){  
 
         if(output== null){
@@ -106,3 +119,4 @@ public class QuestionsGame {
     }
 
 }
+
