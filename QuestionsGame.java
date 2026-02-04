@@ -9,6 +9,7 @@ import java.util.*;
 
 public class QuestionsGame {
     QuestionNode game;
+
     // Your code here
 
     public static class QuestionNode<E> {
@@ -71,10 +72,12 @@ public class QuestionsGame {
 
 
     public void paly(){
-        gametree(game);
+        gametree(game, null,false);
+
     }
 
-    private void gametree(QuestionNode root){
+    private void gametree(QuestionNode root, QuestionNode prev, boolean where){
+        
         Scanner scanner = new Scanner(System.in);
         //leaf
         if(root.left == null && root.right == null){
@@ -86,11 +89,16 @@ public class QuestionsGame {
             }else{ //response =="n"
                 System.out.println("Boo! I Lose. Please help me get better!");
                 System.out.println("What is your object?");
-                String newanswer = scanner.nextLine();
+                QuestionNode newanswer =  new QuestionNode(scanner.nextLine());
                 System.out.println("Please give me a yes/no question that distinguishes between " + newanswer + " and "+root.data+".\nQ: ");
-                String newquestion = scanner.nextLine();
+                QuestionNode newquestion = new QuestionNode(scanner.nextLine());
                 System.out.println("Is the answer \"yes\" for "+ newanswer + "? (y/n)");
-                String response = scanner.next();
+                Boolean decision = false;
+                if(scanner.nextLine().trim().toLowerCase().startsWith("y")){
+                    decision = true;
+                }
+
+                add(prev, root,newquestion, newanswer,where, decision );
                 //add to the tree with a add method
 
             }
@@ -98,11 +106,34 @@ public class QuestionsGame {
             System.out.println(root.data + "(y/n)?");
             //if start with y
             if(scanner.nextLine().trim().toLowerCase().startsWith("y")){
-                gametree(root.left);
+                gametree(root.left, root, true);
             }else{
-                gametree(root.right);
+                gametree(root.right, root, false);
             }
         }
+    }
+
+
+    private void add(QuestionNode prev, QuestionNode root, QuestionNode question, QuestionNode answer, boolean where, boolean decision){   
+
+            
+
+        if(decision){
+            question.left = answer;
+            question.right = root;
+        }else{
+            question.right = answer;
+            question.left = root;
+        }
+    
+        if(where){ //where it come from the mama y/n?
+            prev.left = question;
+        }else{
+            prev.right = question;
+        }
+
+
+            
     }
 
 }
