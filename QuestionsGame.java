@@ -33,7 +33,7 @@ public class QuestionsGame {
 
     }
 
-     public QuestionsGame(Scanner input) {
+    public QuestionsGame(Scanner input) {
     	Scanner key = new Scanner(System.in);
     	game = readTree(input);
     }
