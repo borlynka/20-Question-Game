@@ -6,7 +6,7 @@ import java.util.*;
 
 
 public class QuestionsGame {
-    QuestionNode game;
+    QuestionNode overallRoot;
 
     // Your code here
 
@@ -30,9 +30,13 @@ public class QuestionsGame {
         }
     }
 
+    public QuestionsGame(String object) {
+        overallRoot = new QuestionNode(object);
+    }
+
    
     public QuestionsGame(Scanner input) {
-        game = readTree(input);
+        overallRoot = readTree(input);
     }
 
     private QuestionNode readTree(Scanner input) {
@@ -58,7 +62,7 @@ public class QuestionsGame {
         if(output== null){
             throw new IllegalArgumentException();
         }
-        questiontree(output, game);
+        questiontree(output, overallRoot);
     }
      
     private void questiontree(PrintStream output,QuestionNode root){
@@ -81,14 +85,15 @@ public class QuestionsGame {
     }
 
 
-    public void paly(){
-        gametree(game, null,false);
+    public void play(){
+        Scanner scanner = new Scanner(System.in);
+        gametree(overallRoot, null,false, scanner);
 
     }
 
-    private void gametree(QuestionNode root, QuestionNode prev, boolean where){
+    private void gametree(QuestionNode root, QuestionNode prev, boolean where,Scanner scanner){
         
-        Scanner scanner = new Scanner(System.in);
+    
         //leaf
         if(root.left == null && root.right == null){
             System.out.println("I guess that your object is "+root.data);
@@ -113,12 +118,12 @@ public class QuestionsGame {
 
             }
         }else{
-            System.out.println(root.data + "(y/n)?");
+            System.out.println(root.data + " (y/n)?");
             //if start with y
             if(scanner.nextLine().trim().toLowerCase().startsWith("y")){
-                gametree(root.left, root, true);
+                gametree(root.left, root, true,scanner);
             }else{
-                gametree(root.right, root, false);
+                gametree(root.right, root, false,scanner);
             }
         }
     }
@@ -136,6 +141,10 @@ public class QuestionsGame {
             question.left = root;
         }
     
+        if (prev == null) {
+            overallRoot = question;
+            return;
+        }
         if(where){ //where it come from the mama y/n?
             prev.left = question;
         }else{
