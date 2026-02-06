@@ -10,7 +10,7 @@ public class QuestionsGame {
 
     // Your code here
 
-    public static class QuestionNode<E> {
+    public class QuestionNode<E> {
         public final E data;
         public QuestionNode<E> left;
         public QuestionNode<E> right;
@@ -29,13 +29,13 @@ public class QuestionsGame {
     }
 
     public QuestionsGame(String object){
-        QuestionNode game = new QuestionNode(object);
+        this.game = new QuestionNode(object);
 
     }
 
     public QuestionsGame(Scanner input) {
     	Scanner key = new Scanner(System.in);
-    	game = readTree(input);
+    	this.game = readTree(input);
     }
     private QuestionNode readTree(Scanner input) {
         String type = input.nextLine();   //Q: or A:
@@ -53,22 +53,58 @@ public class QuestionsGame {
         }
     }
     
-    public void saveQuestions(PrintStream output){  
 
+
+    public QuestionsGames(Scanner input) {
+    	Scanner key = new Scanner(System.in);
+    	String type = input.nextLine();   //Q: or A:
+        QuestionNode text = new QuestionNode(input.nextLine());   //actual question or answer
+
+
+    }
+
+    private void read(QuestionNode root, QuestionNode prev, Scanner input, String type, QuestionNode text){
+        type = input.nextLine();
+        text = new QuestionNode(input.nextLine()); 
+
+        
+
+
+        
+        root = text;
+
+        read(root.left, root, input,type,text);
+
+        if(type.equals("A:") && prev.right != null){
+            //root.left = text; //add to the tree now
+            read(prev.right, prev, input, type,text);
+        }
+
+        
+        read(root.right, root, input,type,text);
+
+       
+
+        
+    }
+
+
+
+
+
+
+    public void saveQuestions(PrintStream output){  
         if(output== null){
             throw new IllegalArgumentException();
         }
-
         questiontree(output, game);
-
-
     }
      
     private void questiontree(PrintStream output,QuestionNode root){
         if(root == null){
             return;
         }
-        if(root.left == null && root.right ==null){
+        if(root.left == null && root.right ==null){ //leaf
             output.println("A");
             output.println(root.data);
         }else{
