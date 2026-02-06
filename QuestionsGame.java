@@ -10,83 +10,44 @@ public class QuestionsGame {
 
     // Your code here
 
-    public class QuestionNode<E> {
-        public final E data;
-        public QuestionNode<E> left;
-        public QuestionNode<E> right;
+    public class QuestionNode {
+        public final String data;
+        public QuestionNode left;
+        public QuestionNode right;
 
         //constructs a leaf node with given data
-        public QuestionNode(E data){
-            this(data,null,null);
+        public QuestionNode(String data){
+            this.data = data;
+            this.left = null;
+            this.right = null;
         }
 
         //constructs a node with the given data and links
-        public QuestionNode(E data, QuestionNode<E> left, QuestionNode<E> right){
+        public QuestionNode(String data, QuestionNode left, QuestionNode right){
             this.data = data;
             this.left = left;
             this.right = right;
         }
     }
 
-    public QuestionsGame(String object){
-        this.game = new QuestionNode(object);
-
-    }
-
+   
     public QuestionsGame(Scanner input) {
-    	Scanner key = new Scanner(System.in);
-    	this.game = readTree(input);
+        game = readTree(input);
     }
+
     private QuestionNode readTree(Scanner input) {
-        String type = input.nextLine();   //Q: or A:
-        String text = input.nextLine();   //actual question or answer
-        
-        //leaf node - answer
-        if (type.equals("A:")) {
+        String kind = input.nextLine();   // "Q:" or "A:"
+        String text = input.nextLine();   // actual question/answer text
+
+        if (kind.equals("A:")) {
             return new QuestionNode(text);
-        } 
-        else {
-            //branch node - question
+        } else { // kind is "Q:"
             QuestionNode yesBranch = readTree(input);
             QuestionNode noBranch = readTree(input);
             return new QuestionNode(text, yesBranch, noBranch);
         }
     }
-    
 
-
-    public QuestionsGames(Scanner input) {
-    	Scanner key = new Scanner(System.in);
-    	String type = input.nextLine();   //Q: or A:
-        QuestionNode text = new QuestionNode(input.nextLine());   //actual question or answer
-
-
-    }
-
-    private void read(QuestionNode root, QuestionNode prev, Scanner input, String type, QuestionNode text){
-        type = input.nextLine();
-        text = new QuestionNode(input.nextLine()); 
-
-        
-
-
-        
-        root = text;
-
-        read(root.left, root, input,type,text);
-
-        if(type.equals("A:") && prev.right != null){
-            //root.left = text; //add to the tree now
-            read(prev.right, prev, input, type,text);
-        }
-
-        
-        read(root.right, root, input,type,text);
-
-       
-
-        
-    }
 
 
 
@@ -105,10 +66,10 @@ public class QuestionsGame {
             return;
         }
         if(root.left == null && root.right ==null){ //leaf
-            output.println("A");
+            output.println("A:");
             output.println(root.data);
         }else{
-            output.println("Q");
+            output.println("Q:");
             output.println(root.data);
         }
         
@@ -139,9 +100,9 @@ public class QuestionsGame {
                 System.out.println("Boo! I Lose. Please help me get better!");
                 System.out.println("What is your object?");
                 QuestionNode newanswer =  new QuestionNode(scanner.nextLine());
-                System.out.println("Please give me a yes/no question that distinguishes between " + newanswer + " and "+root.data+".\nQ: ");
+                System.out.println("Please give me a yes/no question that distinguishes between " + newanswer.data + " and "+root.data +".\nQ: ");
                 QuestionNode newquestion = new QuestionNode(scanner.nextLine());
-                System.out.println("Is the answer \"yes\" for "+ newanswer + "? (y/n)");
+                System.out.println("Is the answer \"yes\" for "+ newanswer.data + "? (y/n)");
                 Boolean decision = false;
                 if(scanner.nextLine().trim().toLowerCase().startsWith("y")){
                     decision = true;
@@ -184,6 +145,7 @@ public class QuestionsGame {
 
             
     }
+
 
 }
 
